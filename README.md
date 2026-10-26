@@ -16,11 +16,12 @@ real-time web experience:
   Canvas2D drawing of six national landmarks: the National Martyrs'
   Memorial, Shaheed Minar and Lalbagh Fort on the left; the Sixty Dome
   Mosque, Ahsan Manzil and Jatiya Sangsad Bhaban on the right. Fine ivory
-  and gold line work on deep ink green. The scene draws itself in once,
-  stroke by stroke, with a small gold pen tip; after that the layers drift
-  at different speeds, soft glows breathe, and shapla, jute leaves, birds
-  and geometric motifs float slowly across the sky. The centre stays clear
-  for event content.
+  and gold line work on deep ink green, framed by a faint frieze of
+  Mughal arches, a distant dome-and-minaret skyline and a large shapla
+  watermark. The scene draws itself in once, stroke by stroke, with a
+  small gold pen tip; then the panorama pans continuously and loops
+  seamlessly, while shapla, jute leaves, birds and geometric motifs float
+  across the sky. The centre stays clear for event content.
 - **Foreground — five-stage identity sequence** on an independent
   timeline controller (8 s headline · 6 s RTBD · 8 s trio · 10 s five
   clubs · 8 s finale, 1 s crossfades, endless seamless loop). Background

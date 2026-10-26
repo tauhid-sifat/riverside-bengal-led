@@ -106,6 +106,16 @@ function G(name, layer, cx, base, start, dur, alpha, fn) {
     group.strokes[i].ord = i;
     group.strokes[i].cnt = group.strokes.length;
   }
+  var minX = Infinity, maxX = -Infinity;
+  for (var j = 0; j < group.strokes.length; j++) {
+    var q = group.strokes[j].q;
+    for (var k = 0; k < q.length; k++) {
+      if (q[k][0] < minX) minX = q[k][0];
+      if (q[k][0] > maxX) maxX = q[k][0];
+    }
+  }
+  group.minX = minX;
+  group.maxX = maxX;
   CUR = null;
 }
 function add(q, o) {
@@ -338,6 +348,51 @@ function drawSangsad(a, cx, base) {
 }
 
 /* ============================================================
+   ARCHITECTURAL FRIEZE + DISTANT SKYLINE
+   ============================================================ */
+function drawFrieze(a) {
+  for (var i = 0; i < 12; i++) {
+    var x = i * 160 + 20;
+    a([[x, 160], [x, 100], [x + 18, 60], [x + 40, 36],
+       [x + 62, 60], [x + 80, 100], [x + 80, 160]],
+      { w: 0.8, a: 0.12 });
+    a([[x + 40, 36], [x + 40, 24]], { sharp: true, w: 0.7, a: 0.14 });
+    a(circlePts(x + 40, 20, 2, 8),
+      { closed: true, sharp: true, w: 0.6, col: GA, a: 0.16, fill: 0.1 });
+    a([[x + 40, 160], [x + 40, 182]], { sharp: true, w: 0.6, a: 0.06 });
+  }
+  a([[0, 160], [1920, 160]], { sharp: true, w: 0.8, a: 0.1 });
+  a([[0, 184], [1920, 184]], { sharp: true, w: 0.6, a: 0.06 });
+}
+
+function drawSkyline(a) {
+  a([[0, 760], [1920, 760]], { sharp: true, w: 0.8, a: 0.12 });
+  for (var i = 0; i < 16; i++) {
+    var x = i * 120 + 30;
+    var kind = i % 4;
+    if (kind === 0) {
+      a([[x - 24, 760], [x - 20, 728], [x - 10, 712], [x, 706],
+         [x + 10, 712], [x + 20, 728], [x + 24, 760]],
+        { w: 0.9, a: 0.15, fill: 0.012 });
+      a([[x, 706], [x, 696]], { sharp: true, w: 0.6, a: 0.12 });
+    } else if (kind === 1) {
+      a([[x - 6, 760], [x - 6, 700], [x + 6, 700], [x + 6, 760]],
+        { sharp: true, w: 0.8, a: 0.14 });
+      a([[x - 10, 700], [x, 688], [x + 10, 700]],
+        { w: 0.8, a: 0.14 });
+    } else if (kind === 2) {
+      a([[x, 760], [x + 4, 712]], { sharp: true, w: 1, a: 0.14 });
+      for (var k = -2; k <= 2; k++)
+        a([[x + 4, 712], [x + 4 + k * 10, 700 - Math.abs(k) * 4]],
+          { w: 0.7, col: TE, a: 0.12 });
+    } else {
+      a([[x - 18, 760], [x - 18, 730], [x, 712], [x + 18, 730], [x + 18, 760]],
+        { w: 0.8, a: 0.12 });
+    }
+  }
+}
+
+/* ============================================================
    FLOATING DOODLES
    ============================================================ */
 function shapeShapla() {
@@ -418,6 +473,17 @@ function seedDoodles() {
   D('diamond', 1780, 700, 0.8, 6, true, 5.4);
   D('cloud', 300, 120, 0.9, 3, false, 0.5);
   D('cloud', 1400, 110, 0.8, 2, false, 2.1);
+  D('shapla', 620, 400, 1.0, 5, true, 4.4);
+  D('shapla', 1300, 460, 0.9, 6, true, 5.8);
+  D('leaf', 1000, 120, 0.9, 4, true, 3.7);
+  D('leaf', 1500, 500, 0.8, 7, true, 2.4);
+  D('leaf', 200, 720, 0.9, 5, true, 4.9);
+  D('bird', 700, 300, 0.9, 10, false, 5.5);
+  D('bird', 1200, 160, 0.8, 12, false, 3.2);
+  D('diamond', 500, 760, 0.8, 6, true, 1.7);
+  D('diamond', 1400, 800, 0.9, 5, true, 4.1);
+  D('cloud', 800, 80, 0.9, 3, false, 3.6);
+  D('cloud', 1700, 220, 0.8, 2, false, 5.2);
 }
 function drawDoodles(T, ox) {
   var span = W + 240;
@@ -480,10 +546,10 @@ function build() {
                   start: 0, dur: 1.8, alpha: 0.8, strokes: [], glow: null };
   GROUPS.push(horizon);
   CUR = horizon;
-  add([[-60, 735], [400, 732], [900, 738], [1400, 733], [1980, 739]],
+  add([[0, 735], [400, 732], [900, 738], [1400, 733], [1920, 739]],
       { sharp: true, w: 0.8, a: 0.06 });
-  add([[-60, 795], [1980, 795]], { sharp: true, w: 0.7, a: 0.035 });
-  add([[-60, 850], [1980, 850]], { sharp: true, w: 0.9, a: 0.055 });
+  add([[0, 795], [1920, 795]], { sharp: true, w: 0.7, a: 0.035 });
+  add([[0, 850], [1920, 850]], { sharp: true, w: 0.9, a: 0.055 });
   for (var i = 0; i < 7; i++) {
     var x = 80 + i * 280;
     add([[x, 850], [x + 36, 850]], { sharp: true, w: 0.7, a: 0.04 });
@@ -492,7 +558,12 @@ function build() {
     horizon.strokes[j].ord = j;
     horizon.strokes[j].cnt = horizon.strokes.length;
   }
+  horizon.minX = 0;
+  horizon.maxX = 1920;
   CUR = null;
+
+  G('frieze', 'far', 0, 0, 0.0, 2.5, 0.8, drawFrieze);
+  G('skyline', 'far', 0, 0, 0.5, 3.0, 0.8, drawSkyline);
 
   G('martyrs', 'far', 140, 730, 0.2, 3.0, 0.75, drawMartyrs);
   G('shaheed', 'mid', 380, 790, 2.0, 2.4, 1.0, drawShaheed);
@@ -502,7 +573,9 @@ function build() {
   G('sangsad', 'far', 1790, 730, 10.0, 3.0, 0.75, drawSangsad);
 
   GROUPS.forEach(function (L) {
-    if (L.name === 'horizon') return;
+    L.cullMargin = (L.name === 'horizon' || L.name === 'frieze' ||
+                    L.name === 'skyline') ? 0 : 260;
+    if (L.name === 'horizon' || L.name === 'frieze' || L.name === 'skyline') return;
     L.scale = L.name === 'shaheed' ? 1.25 : 1.15;
     var r = L.name === 'martyrs' ? 220 : L.name === 'sangsad' ? 200 :
             L.name === 'sixty' ? 210 : L.name === 'ahsan' ? 160 :
@@ -522,57 +595,89 @@ function build() {
 /* ============================================================
    DRAW
    ============================================================ */
-function drawLayer(layer, T, ox, oy) {
+function drawWatermark(T) {
+  var cx = 960, cy = 420, R = 250;
   g.save();
-  g.translate(ox, oy);
-  for (var i = 0; i < GROUPS.length; i++) {
-    var L = GROUPS[i];
-    if (L.layer !== layer) continue;
-    var rv = clamp01((T - L.start) / L.dur);
-    if (rv <= 0) continue;
+  g.translate(cx, cy);
+  g.rotate(T * 0.004);
+  g.strokeStyle = 'rgba(' + IV + ',0.035)';
+  g.lineWidth = 1;
+  for (var i = 0; i < 8; i++) {
+    var a = i / 8 * 6.283, dx = Math.cos(a), dy = Math.sin(a);
+    var q = [[0, 0],
+             [dx * 30 - dy * 45, dy * 30 + dx * 45],
+             [dx * 130 - dy * 60, dy * 130 + dx * 60],
+             [dx * R, dy * R],
+             [dx * 130 + dy * 60, dy * 130 - dx * 60],
+             [dx * 30 + dy * 45, dy * 30 - dx * 45],
+             [0, 0]];
+    g.stroke(smoothPath(q, true));
+  }
+  g.strokeStyle = 'rgba(' + GA + ',0.045)';
+  g.lineWidth = 1.2;
+  g.stroke(sharpPath(circlePts(0, 0, 26, 40), true));
+  g.strokeStyle = 'rgba(' + IV + ',0.018)';
+  g.lineWidth = 1;
+  g.stroke(sharpPath(circlePts(0, 0, R + 18, 60), true));
+  g.restore();
+}
+
+function drawLayer(layer, T, ox, oy, shift) {
+  for (var copy = 0; copy < 2; copy++) {
     g.save();
-    if (L.scale && L.scale !== 1) {
-      g.translate(L.cx, L.base);
-      g.scale(L.scale, L.scale);
-      g.translate(-L.cx, -L.base);
-    }
-    if (L.glow) {
-      g.globalAlpha = (0.75 + 0.25 * Math.sin(T * 0.18 + L.glow.ph)) *
-                      Math.min(1, rv * 3);
-      g.fillStyle = L.glow.grd;
-      g.beginPath();
-      g.arc(L.glow.cx, L.glow.cy, L.glow.r, 0, 6.283);
-      g.fill();
-      g.globalAlpha = 1;
-    }
-    for (var j = 0; j < L.strokes.length; j++) {
-      var S = L.strokes[j];
-      var local = clamp01((rv * 1.35 - (S.ord / S.cnt) * 1.05) / 0.3);
-      if (local <= 0.01) continue;
-      var a = S.a * L.alpha * 1.55 * Math.min(1, local);
-      if (S.fill) {
-        g.fillStyle = 'rgba(' + S.col + ',' +
-          (S.fill * Math.min(1, local) * L.alpha * 1.2) + ')';
-        g.fill(S.p);
+    g.translate(ox - shift + copy * W, oy);
+    for (var i = 0; i < GROUPS.length; i++) {
+      var L = GROUPS[i];
+      if (L.layer !== layer) continue;
+      var rv = clamp01((T - L.start) / L.dur);
+      if (rv <= 0) continue;
+      var gx = ox - shift + copy * W;
+      var margin = L.cullMargin || 0;
+      if (L.maxX + gx < -margin || L.minX + gx > W + margin) continue;
+      g.save();
+      if (L.scale && L.scale !== 1) {
+        g.translate(L.cx, L.base);
+        g.scale(L.scale, L.scale);
+        g.translate(-L.cx, -L.base);
       }
-      g.strokeStyle = 'rgba(' + S.col + ',' + a + ')';
-      g.lineWidth = S.w;
-      g.lineCap = 'round';
-      g.lineJoin = 'round';
-      g.setLineDash(local < 1 ? [S.len * local, 1e6] : []);
-      g.stroke(S.p);
-      g.setLineDash([]);
-      if (local < 1 && S.len > 4) {
-        var pt = pointAt(S.q, S.len * local);
-        g.fillStyle = 'rgba(' + GA + ',0.7)';
+      if (L.glow) {
+        g.globalAlpha = (0.75 + 0.25 * Math.sin(T * 0.18 + L.glow.ph)) *
+                        Math.min(1, rv * 3);
+        g.fillStyle = L.glow.grd;
         g.beginPath();
-        g.arc(pt[0], pt[1], 1.6, 0, 6.283);
+        g.arc(L.glow.cx, L.glow.cy, L.glow.r, 0, 6.283);
         g.fill();
+        g.globalAlpha = 1;
       }
+      for (var j = 0; j < L.strokes.length; j++) {
+        var S = L.strokes[j];
+        var local = clamp01((rv * 1.35 - (S.ord / S.cnt) * 1.05) / 0.3);
+        if (local <= 0.01) continue;
+        var a = S.a * L.alpha * 1.55 * Math.min(1, local);
+        if (S.fill) {
+          g.fillStyle = 'rgba(' + S.col + ',' +
+            (S.fill * Math.min(1, local) * L.alpha * 1.2) + ')';
+          g.fill(S.p);
+        }
+        g.strokeStyle = 'rgba(' + S.col + ',' + a + ')';
+        g.lineWidth = S.w;
+        g.lineCap = 'round';
+        g.lineJoin = 'round';
+        g.setLineDash(local < 1 ? [S.len * local, 1e6] : []);
+        g.stroke(S.p);
+        g.setLineDash([]);
+        if (local < 1 && S.len > 4) {
+          var pt = pointAt(S.q, S.len * local);
+          g.fillStyle = 'rgba(' + GA + ',0.7)';
+          g.beginPath();
+          g.arc(pt[0], pt[1], 1.6, 0, 6.283);
+          g.fill();
+        }
+      }
+      g.restore();
     }
     g.restore();
   }
-  g.restore();
 }
 
 function draw(T, dt) {
@@ -600,14 +705,21 @@ function draw(T, dt) {
   g.fillStyle = hg;
   g.fillRect(0, 0, W, H);
 
+  drawWatermark(T);
+
   var farX = Math.sin(T * 0.035 + 0.7) * 18,
       farY = Math.sin(T * 0.028 + 1.1) * 4,
       midX = Math.sin(T * 0.05 + 2.1) * 30,
       midY = Math.sin(T * 0.04 + 3.2) * 6,
       nearX = Math.sin(T * 0.07 + 4.2) * 45;
 
-  drawLayer('far', T, farX, farY);
-  drawLayer('mid', T, midX, midY);
+  var scrollT = Math.max(0, T - 42);
+  var ramp = Math.min(1, scrollT / 8);
+  var farShift = (4 * scrollT * ramp) % W;
+  var midShift = (10 * scrollT * ramp) % W;
+
+  drawLayer('far', T, farX, farY, farShift);
+  drawLayer('mid', T, midX, midY, midShift);
   drawMist(T, nearX * 0.5);
   drawDoodles(T, nearX);
 }
