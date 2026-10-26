@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face{font-family:'Fraunces';src:url('./fraunces.woff2') format('woff2');font-weight:900;font-display:swap}
+  @font-face{font-family:'Nunito Sans';src:url('./nunito.woff2') format('woff2');font-weight:400 900;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1800px;height:2400px;background:#04120b}
+  body{display:flex;align-items:center;justify-content:center}
+  #card{position:relative;width:1800px;height:2400px;overflow:hidden;background:
+    radial-gradient(70% 50% at 50% 30%, rgba(233,185,92,.10) 0%, rgba(233,185,92,0) 60%),
+    radial-gradient(50% 40% at 50% 46%, rgba(2,10,5,.08) 0%, rgba(2,10,5,.30) 70%, rgba(1,6,3,.55) 100%),
+    linear-gradient(180deg, #071a10 0%, #04120b 30%, #04120b 70%, #020a06 100%);}
+  /* faint top arch motif */
+  #card::before{content:'';position:absolute;left:50%;top:-560px;width:1500px;height:1500px;transform:translateX(-50%);
+    border:1px solid rgba(212,175,105,.10);border-radius:50%;pointer-events:none}
+  #card::after{content:'';position:absolute;left:50%;top:-480px;width:1340px;height:1340px;transform:translateX(-50%);
+    border:1px solid rgba(212,175,105,.07);border-radius:50%;pointer-events:none}
+  .frame-outer{position:absolute;inset:44px;border:1px solid rgba(212,175,105,.45);pointer-events:none;z-index:3}
+  .frame-inner{position:absolute;inset:56px;border:1px solid rgba(212,175,105,.22);pointer-events:none;z-index:3}
+  .corner{position:absolute;width:54px;height:54px;border:2px solid #D8AB5A;pointer-events:none;z-index:3}
+  .c-tl{top:44px;left:44px;border-right:none;border-bottom:none}
+  .c-tr{top:44px;right:44px;border-left:none;border-bottom:none}
+  .c-bl{bottom:44px;left:44px;border-right:none;border-top:none}
+  .c-br{bottom:44px;right:44px;border-left:none;border-top:none}
+  .inner{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:126px 200px 108px;font-family:'Nunito Sans',system-ui,sans-serif}
+  .logo-medal{width:500px;height:500px;border-radius:50%;background:#F6EFE0;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 30px 90px rgba(0,0,0,.6), 0 0 120px rgba(233,185,92,.16);position:relative}
+  .logo-medal::before{content:'';position:absolute;inset:-22px;border-radius:50%;border:1px solid rgba(216,171,90,.65)}
+  .logo-medal::after{content:'';position:absolute;inset:-34px;border-radius:50%;border:1px solid rgba(216,171,90,.28)}
+  .logo-medal img{width:462px;height:462px;object-fit:contain;display:block}
+  .kicker{margin-top:56px;font-weight:800;letter-spacing:.58em;text-indent:.58em;font-size:40px;color:#E9B95C}
+  h1{font-family:'Fraunces',serif;font-weight:900;color:#F6EFE0;line-height:.95;letter-spacing:.01em;
+    text-shadow:0 6px 60px rgba(0,0,0,.8);margin-top:26px}
+  h1 .l1{display:block;font-size:96px;letter-spacing:.14em;text-indent:.14em;font-family:'Nunito Sans',sans-serif;font-weight:800;font-size:64px;color:#F1E8D4}
+  h1 .l2{display:block;font-size:140px}
+  h1 .l3{display:block;font-size:140px}
+  .rule{width:560px;height:5px;margin:40px auto 0;background:linear-gradient(90deg,#E9B95C 0 88%,#B4232A 88% 100%)}
+  .org{margin-top:28px;font-weight:800;letter-spacing:.42em;text-indent:.42em;font-size:33px;color:#F1E8D4}
+  .orn{display:flex;align-items:center;gap:22px;margin:44px 0 4px}
+  .orn .line{width:220px;height:1px;background:rgba(212,175,105,.5)}
+  .orn .dia{width:12px;height:12px;background:#D8AB5A;transform:rotate(45deg)}
+  .orn .dot{width:7px;height:7px;border:1px solid #D8AB5A;transform:rotate(45deg)}
+  .label{margin-top:44px;font-weight:800;letter-spacing:.5em;text-indent:.5em;font-size:30px;color:#E9B95C}
+  .value{margin-top:16px;font-weight:800;font-size:46px;color:#F6EFE0;line-height:1.4}
+  .value.small{font-size:44px;font-weight:600;line-height:1.5;color:#EFE6D2}
+  .venue-name{margin-top:16px;font-weight:800;font-size:46px;color:#F6EFE0;line-height:1.4}
+  .venue-addr{margin-top:10px;font-weight:600;font-size:37px;color:#D9CFB8;line-height:1.5}
+  .dress{margin-top:14px;font-weight:600;font-size:40px;color:#D9CFB8;line-height:1.55}
+  .dress strong{font-weight:800;color:#F6EFE0}
+  .regards{margin-top:48px;font-weight:800;letter-spacing:.5em;text-indent:.5em;font-size:30px;color:#E9B95C}
+  .reg-name{margin-top:18px;font-family:'Fraunces',serif;font-weight:900;font-size:54px;color:#F6EFE0}
+  .reg-title{margin-top:10px;font-weight:700;font-size:36px;color:#D9CFB8;letter-spacing:.06em}
+  .reg-org{margin-top:6px;font-weight:800;font-size:36px;color:#F1E8D4;letter-spacing:.18em}
+  .foot-rule{margin-top:auto;padding-top:36px;width:100%}
+  .foot-rule .fl{height:1px;background:rgba(212,175,105,.35);width:100%}
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="frame-outer"></div>
+  <div class="frame-inner"></div>
+  <div class="corner c-tl"></div><div class="corner c-tr"></div>
+  <div class="corner c-bl"></div><div class="corner c-br"></div>
+  <div class="inner">
+    <div class="logo-medal"><img src="./RTBD.svg" alt="Round Table Bangladesh"></div>
+    <div class="kicker">3RD&nbsp;ANNUAL</div>
+    <h1>
+      <span class="l2">GENERAL</span>
+      <span class="l3">MEETING</span>
+    </h1>
+    <div class="rule"></div>
+    <div class="org">ROUND&nbsp;TABLE&nbsp;BANGLADESH</div>
+
+    <div class="orn"><div class="line"></div><div class="dot"></div><div class="dia"></div><div class="dot"></div><div class="line"></div></div>
+
+    <div class="label">DATE&nbsp;&amp;&nbsp;TIME</div>
+    <div class="value">Saturday, 7 November 2026<br>7:00 PM</div>
+
+    <div class="label">VENUE</div>
+    <div class="venue-name">Club Notredamians Bangladesh Limited</div>
+    <div class="venue-addr">House 64, Block D, Road 10,<br>Banani, Dhaka 1213</div>
+
+    <div class="label">DRESS&nbsp;CODE</div>
+    <div class="dress"><strong>RT Member</strong> &ndash; RT T-Shirt<br><strong>Guest</strong> &ndash; Semi-Casual</div>
+
+    <div class="regards">REGARDS</div>
+    <div class="reg-name">Tr. Mahmood Al Waheed Ishad</div>
+    <div class="reg-title">President 2025–2026</div>
+    <div class="reg-org">Round Table Bangladesh</div>
+
+    <div class="foot-rule"><div class="fl"></div></div>
+  </div>
+</div>
+</body>
+</html>
