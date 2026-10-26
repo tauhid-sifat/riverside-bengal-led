@@ -1,5 +1,7 @@
 node_modules/
 three.min.js
+.vercel/
 *.log
 .DS_Store
 Thumbs.db
+.vercel
