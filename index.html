@@ -15,8 +15,8 @@
   #stage{position:relative;width:1920px;height:960px;flex:0 0 auto;transform-origin:center center;background:#04120b;overflow:hidden}
   #bg{position:absolute;inset:0;width:100%;height:100%;display:block}
   .scrim{position:absolute;inset:0;pointer-events:none;z-index:3;
-    background:radial-gradient(46% 42% at 50% 47%, rgba(2,10,5,.18) 0%, rgba(2,10,5,.40) 68%, rgba(1,6,3,.62) 100%),
-               linear-gradient(180deg, rgba(2,10,5,.30) 0%, rgba(2,10,5,.06) 26%, rgba(2,10,5,.06) 70%, rgba(2,10,5,.36) 100%);}
+    background:radial-gradient(46% 42% at 50% 47%, rgba(2,10,5,.10) 0%, rgba(2,10,5,.28) 68%, rgba(1,6,3,.48) 100%),
+               linear-gradient(180deg, rgba(2,10,5,.22) 0%, rgba(2,10,5,.04) 26%, rgba(2,10,5,.04) 70%, rgba(2,10,5,.26) 100%);}
   .grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
   .frame-line{position:absolute;inset:26px;border:1px solid rgba(212,175,105,.20);z-index:5;pointer-events:none}
@@ -84,13 +84,13 @@
           <div class="rise d5 sub">ROUND&nbsp;TABLE&nbsp;BANGLADESH</div>
         </div>
       </section>
-      <section class="scene" id="s-rti">
-        <div class="pop p1 logo-cell hero sweep"><img data-logo="RTI" alt="Round Table International"></div>
+      <section class="scene" id="s-rtbd">
+        <div class="pop p1 logo-cell hero sweep"><img data-logo="RTBD" alt="Round Table Bangladesh"></div>
       </section>
       <section class="scene" id="s-trio">
         <div class="logo-row trio">
           <div class="pop p1 logo-cell"><img data-logo="ASPA" alt="ASPA"></div>
-          <div class="pop p2 logo-cell"><img data-logo="RTBD" alt="Round Table Bangladesh"></div>
+          <div class="pop p2 logo-cell"><img data-logo="RTI" alt="Round Table International"></div>
           <div class="pop p3 logo-cell"><img data-logo="RTITM" alt="RTITM"></div>
         </div>
       </section>
@@ -115,14 +115,14 @@
     <div id="err"></div>
   </div>
 </div>
-<script src="./doodle-bg.js"></script>
+<script src="./landmarks-bg.js"></script>
 <script>
 (function(){
 'use strict';
 /* ============ CONFIG: exact sequence + timings (unchanged) ============ */
 var TIMELINE=[
   {id:'s-headline',dur:8},
-  {id:'s-rti',dur:6},
+  {id:'s-rtbd',dur:6},
   {id:'s-trio',dur:8},
   {id:'s-five',dur:10},
   {id:'s-clubs',dur:8}
@@ -150,15 +150,15 @@ function setScene(i){
 function loopOK(){return location.search.indexOf('loop=0')<0&&LOOP;}
 setScene(0);
 /* ============================================================
-   BACKGROUND: "Riverside Bengal" hand-drawn mural.
-   Engine lives in ./doodle-bg.js (MuralBG). This clock is the
+   BACKGROUND: "Landmarks of Bangladesh" line-art panorama.
+   Engine lives in ./landmarks-bg.js (LandmarkBG). This clock is the
    mural's own time-of-day: it never resets and is never touched
    by the foreground scene controller.
    Test locks:  ?bt=14  freezes the mural+sketch clocks
                 ?ft=31  freezes the foreground scene clock
    ============================================================ */
 var cv=document.getElementById('bg');
-MuralBG.init(cv);
+LandmarkBG.init(cv);
 var bgT=0;   /* start dark: the mural draws itself in over ~15 s */
 /* ============ MASTER RAF: bg clock never touched by fg ============ */
 var last=performance.now(),fgAcc=0,bgT=0;
@@ -176,7 +176,7 @@ function frame(now){
     for(var i=0;i<TIMELINE.length;i++){if(fgAcc<acc+TIMELINE[i].dur){idx=i;break;}acc+=TIMELINE[i].dur;idx=i;}
     setScene(idx);
   }
-  MuralBG.draw(bgT,dt);
+  LandmarkBG.draw(bgT,dt);
 }
 requestAnimationFrame(frame);
 addEventListener('keydown',function(e){if(e.key==='f'||e.key==='F'){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}});

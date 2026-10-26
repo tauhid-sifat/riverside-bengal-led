@@ -1,9 +1,9 @@
-# riverside-bengal — ASPA AGM 2026 LED Wall
+# Bangladesh Landmarks — ASPA AGM 2026 LED Wall
 
-A full-screen, continuously animated, hand-illustrated Bangladesh panorama
-built as a live event backdrop for the **3rd Annual General Meeting of
-Round Table Bangladesh (ASPA AGM 2026)** — designed for a 2:1 LED wall
-at 1920 × 960.
+A full-screen, continuously animated line-art panorama of Bangladesh's
+national landmarks, built as a live event backdrop for the **3rd Annual
+General Meeting of Round Table Bangladesh (ASPA AGM 2026)** — designed for
+a 2:1 LED wall at 1920 × 960.
 
 ![preview](./RTI.svg)
 
@@ -12,17 +12,17 @@ at 1920 × 960.
 A single-page, zero-dependency *motion-graphics package* implemented as a
 real-time web experience:
 
-- **Background — "Riverside Bengal" mural.** One artist's continuous
-  Canvas2D landscape: braided river with drifting currents, a Padma-style
-  cable-stayed bridge with gold harp cables, a village with thatched
-  homes (animated chulha smoke), mango/banyan trees, coconut palms,
-  banana plants, paddy terraces, arching lotus blooms, a painted cycle
-  rickshaw, two egrets crossing the sky. On launch the mural *draws
-  itself in*, stroke by stroke, over ~15 s. Ink alphas, selective
-  hatching and fixed per-stroke tremor give it a genuine hand-sketch
-  character. The centre stays clear for event content.
+- **Background — "Landmarks of Bangladesh" line-art panorama.** A layered
+  Canvas2D drawing of six national landmarks: the National Martyrs'
+  Memorial, Shaheed Minar and Lalbagh Fort on the left; the Sixty Dome
+  Mosque, Ahsan Manzil and Jatiya Sangsad Bhaban on the right. Fine ivory
+  and gold line work on deep ink green. The scene draws itself in once,
+  stroke by stroke, with a small gold pen tip; after that the layers drift
+  at different speeds, soft glows breathe, and shapla, jute leaves, birds
+  and geometric motifs float slowly across the sky. The centre stays clear
+  for event content.
 - **Foreground — five-stage identity sequence** on an independent
-  timeline controller (8 s headline · 6 s RTI · 8 s trio · 10 s five
+  timeline controller (8 s headline · 6 s RTBD · 8 s trio · 10 s five
   clubs · 8 s finale, 1 s crossfades, endless seamless loop). Background
   never resets between scenes.
 
@@ -46,17 +46,20 @@ python -m http.server 8080
 
 | URL | Behaviour |
 |---|---|
-| `?bt=14` | freezes the mural + sketch clock at 14 s |
+| `?bt=14` | freezes the landmark reveal + parallax clock at 14 s |
 | `?ft=31` | pins the foreground to the "five logos" scene (end states) |
 | `?loop=0` | hold on the finale instead of looping |
 | `&debug` combo | combine both locks for deterministic stills |
+
+With `prefers-reduced-motion: reduce`, the landmark panorama holds a fully
+drawn still frame; the foreground sequence keeps its scene changes.
 
 ## Files
 
 | Path | Role |
 |---|---|
 | `index.html` | stage, foreground scenes, timeline controller |
-| `doodle-bg.js` | mural background engine (`MuralBG`) |
+| `landmarks-bg.js` | landmark panorama engine (`LandmarkBG`) |
 | `*.svg`, `fiveclubs.png` | official club marks (never recolor/crop these) |
 | `fraunces.woff2`, `nunito.woff2` | display + label typefaces |
 
