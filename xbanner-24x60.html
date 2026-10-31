@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face{font-family:'Fraunces';src:url('./fraunces.woff2') format('woff2');font-weight:900;font-display:swap}
+  @font-face{font-family:'Nunito Sans';src:url('./nunito.woff2') format('woff2');font-weight:400 900;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:720px;height:1800px;background:#020a06}
+  body{display:flex;align-items:center;justify-content:center}
+  #card{position:relative;width:720px;height:1800px;overflow:hidden;background:
+    radial-gradient(75% 34% at 50% 18%, rgba(233,185,92,.12) 0%, rgba(233,185,92,0) 60%),
+    radial-gradient(60% 40% at 50% 38%, rgba(2,10,5,.06) 0%, rgba(2,10,5,.34) 72%, rgba(1,6,3,.62) 100%),
+    linear-gradient(180deg,#081c11 0%,#04120b 30%,#030e08 70%,#020a06 100%);}
+  #card .grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+  #card::before{content:'';position:absolute;left:50%;top:-250px;width:660px;height:660px;transform:translateX(-50%);
+    border:1px solid rgba(212,175,105,.11);border-radius:50%;pointer-events:none}
+  #card::after{content:'';position:absolute;left:50%;top:-215px;width:590px;height:590px;transform:translateX(-50%);
+    border:1px solid rgba(212,175,105,.08);border-radius:50%;pointer-events:none}
+  .frame-outer{position:absolute;inset:22px;border:1px solid rgba(212,175,105,.45);pointer-events:none;z-index:3}
+  .frame-inner{position:absolute;inset:30px;border:1px solid rgba(212,175,105,.22);pointer-events:none;z-index:3}
+  .corner{position:absolute;width:28px;height:28px;border:2px solid #D8AB5A;pointer-events:none;z-index:3}
+  .c-tl{top:22px;left:22px;border-right:none;border-bottom:none}
+  .c-tr{top:22px;right:22px;border-left:none;border-bottom:none}
+  .c-bl{bottom:22px;left:22px;border-right:none;border-top:none}
+  .c-br{bottom:22px;right:22px;border-left:none;border-top:none}
+  .inner{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:64px 64px 56px;font-family:'Nunito Sans',system-ui,sans-serif}
+  .logo-medal{width:300px;height:300px;border-radius:50%;background:#F6EFE0;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 18px 54px rgba(0,0,0,.6), 0 0 76px rgba(233,185,92,.15);position:relative}
+  .logo-medal::before{content:'';position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(216,171,90,.65)}
+  .logo-medal::after{content:'';position:absolute;inset:-21px;border-radius:50%;border:1px solid rgba(216,171,90,.28)}
+  .logo-medal img{width:278px;height:278px;object-fit:contain;display:block}
+  .kicker{margin-top:44px;font-weight:800;letter-spacing:.56em;text-indent:.56em;font-size:24px;color:#E9B95C}
+  h1{font-family:'Fraunces',serif;font-weight:900;color:#F6EFE0;line-height:.95;letter-spacing:.01em;
+    text-shadow:0 5px 44px rgba(0,0,0,.8);margin-top:18px}
+  h1 .l2{display:block;font-size:92px}
+  h1 .l3{display:block;font-size:92px}
+  .rule{width:340px;height:4px;margin:26px auto 0;background:linear-gradient(90deg,#E9B95C 0 88%,#B4232A 88% 100%)}
+  .org{margin-top:20px;font-weight:800;letter-spacing:.4em;text-indent:.4em;font-size:21px;color:#F1E8D4}
+  .orn{display:flex;align-items:center;gap:15px;margin:44px 0 2px}
+  .orn .line{width:130px;height:1px;background:rgba(212,175,105,.5)}
+  .orn .dia{width:8px;height:8px;background:#D8AB5A;transform:rotate(45deg)}
+  .orn .dot{width:5px;height:5px;border:1px solid #D8AB5A;transform:rotate(45deg)}
+  .label{margin-top:52px;font-weight:800;letter-spacing:.48em;text-indent:.48em;font-size:20px;color:#E9B95C}
+  .value{margin-top:12px;font-weight:800;font-size:31px;color:#F6EFE0;line-height:1.42}
+  .venue-name{margin-top:12px;font-weight:800;font-size:30px;color:#F6EFE0;line-height:1.4}
+  .venue-addr{margin-top:9px;font-weight:600;font-size:24px;color:#D9CFB8;line-height:1.5}
+  .venue-hall{margin-top:22px;display:inline-block;padding:11px 26px;border:1px solid rgba(216,171,90,.55);border-radius:2px}
+  .venue-hall span{font-weight:800;font-size:27px;color:#E9B95C;letter-spacing:.06em}
+  .foot-rule{margin-top:56px;width:100%}
+  .foot-rule .fl{height:1px;background:rgba(212,175,105,.35);width:100%}
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="frame-outer"></div>
+  <div class="frame-inner"></div>
+  <div class="corner c-tl"></div><div class="corner c-tr"></div>
+  <div class="corner c-bl"></div><div class="corner c-br"></div>
+  <div class="inner">
+    <div class="logo-medal"><img src="./RTBD.svg" alt="Round Table Bangladesh"></div>
+    <div class="kicker">3RD&nbsp;ANNUAL</div>
+    <h1>
+      <span class="l2">GENERAL</span>
+      <span class="l3">MEETING</span>
+    </h1>
+    <div class="rule"></div>
+    <div class="org">ROUND&nbsp;TABLE&nbsp;BANGLADESH</div>
+
+    <div class="orn"><div class="line"></div><div class="dot"></div><div class="dia"></div><div class="dot"></div><div class="line"></div></div>
+
+    <div class="label">DATE&nbsp;&amp;&nbsp;TIME</div>
+    <div class="value">Saturday, 7 November 2026<br>7:00 PM</div>
+
+    <div class="label">VENUE</div>
+    <div class="venue-name">Club Notredamians Bangladesh Limited</div>
+    <div class="venue-addr">House 64, Block D, Road 10,<br>Banani, Dhaka 1213</div>
+    <div class="venue-hall"><span>Fr. Peixotto Hall (Lift &ndash; 8)</span></div>
+
+    <div class="foot-rule"><div class="fl"></div></div>
+  </div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>
